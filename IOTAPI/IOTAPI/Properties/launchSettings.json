@@ -1,0 +1,28 @@
+﻿{
+  "$schema": "http://json.schemastore.org/launchsettings.json",
+    "profiles": {
+        "IOTAPI-Development": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": true,
+            "launchUrl": "swagger",
+            "applicationUrl": "http://localhost:5000;",
+          "environmentVariables": {
+            "ASPNETCORE_ENVIRONMENT": "Development",
+            "APP_AUTHORITY": "https://localhost:8000",
+            "APP_API_KEY": "test",
+            "APP_REDIS_CONNECTION_STRING": "localhost:6379,name=default,password=my_redis_password"
+          }
+        },
+
+        "IOTAPI-Production": {
+            "commandName": "Project",
+            "dotnetRunMessages": true,
+            "launchBrowser": true,
+            "applicationUrl": "http://localhost:5000;",
+            "environmentVariables": {
+                "ASPNETCORE_ENVIRONMENT": "Production"
+            }
+        }
+    }
+}

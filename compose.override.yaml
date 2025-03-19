@@ -1,0 +1,57 @@
+services:
+  seq:
+    environment:
+      - ACCEPT_EULA=Y
+      - SEQ_API_CANONICALURI=https://localhost
+      - SEQ_FIRSTRUN_ADMINPASSWORDHASH=
+
+  postgres:
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: example
+      PGDATA: /var/lib/postgresql/data
+
+  pgadmin4:
+    environment:
+      PGADMIN_DEFAULT_EMAIL: stepanenkodo@yandex.ru
+      PGADMIN_DEFAULT_PASSWORD: example
+      PGADMIN_LISTEN_PORT: 8081
+
+  identity:
+    environment:
+      - APP_CLIENT_URL=https://localhost
+      - APP_POSTGRESQL_CONNECTION_STRING=User ID=postgres;Password=example;Host=host.docker.internal;Port=6060;Database=Identity;
+      - APP_SEQ_URL=http://seq:5341
+      - APP_DEFAULT_USER_USERNAME=admin
+      - APP_DEFAULT_USER_PASSWORD=example
+      - APP_DEFAULT_USER_EMAIL=admin@mail.com
+      - APP_DEFAULT_USER_NAME=John Smith
+      - APP_DEFAULT_USER_GIVENNAME=John
+      - APP_DEFAULT_USER_FAMILYNAME=Smith
+
+  redis:
+      environment:
+        - REDIS_PASSWORD=example     
+
+  backend:
+    environment:
+      - APP_AUTHORITY=https://localhost
+      - APP_API_KEY=test
+      - APP_REDIS_CONNECTION_STRING=host.docker.internal:6379,name=default,password=example
+      - MQTTBrokerSettings__TCPPort=6000
+      - MQTTBrokerSettings__WSPort=5000
+      - MQTTBrokerSettings__DefaultUserName=example
+      - MQTTBrokerSettings__DefaultPassword=example
+
+  nginx:
+    volumes:
+        - ./cert.pem:/etc/ssl/certs/cert.pem
+        - ./key.pem:/etc/ssl/private/key.pem
+        - ./nginx.conf:/etc/nginx/nginx.conf
+    environment:
+      - APP_CLIENT_URL=https://localhost
+      - APP_AUTHORITY=https://localhost
+      - APP_API_URL=https://localhost
+      - APP_CLIENT_ID=spa
+      - APP_MQTT_URL=wss://localhost/mqtt
